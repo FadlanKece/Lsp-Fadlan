@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Models\Discount;
 use App\Models\Products;
+use App\Models\Product_Categories;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,10 +19,13 @@ use Inertia\Inertia;
 |
 */
 Route::get('/', function () {
-    $data = Products::with('ProductCategories')->get();
-    $data = Discount::with('DiscountCategories')->get();
+    $DataProduct = Products::with('ProductCategories')->get();
+    $DataDiscount = Discount::with('DiscountCategories')->get();
+    $ProductCategories = Product_Categories::all();
     return Inertia::render('Homepage', [
-        'data' => $data
+        'DataProduct' => $DataProduct,
+        'DataDiscount' => $DataDiscount,
+        'ProductCategory' => $ProductCategories
     ]);
 });
 

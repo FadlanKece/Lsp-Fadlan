@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Discount;
 use App\Models\Products;
 use App\Models\Product_Categories;
+use App\Models\Discount_Categories;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,7 +28,18 @@ Route::get('/', function () {
         'DataDiscount' => $DataDiscount,
         'ProductCategory' => $ProductCategories
     ]);
-});
+})->name('homepage');
+
+Route::get('/discount', function () {
+    $DataProduct = Products::with('ProductCategories')->get();
+    $DataDiscount = Discount::with('DiscountCategories', 'Products')->get();
+    $ProductCategories = Discount_Categories::all();
+    return Inertia::render('Discountpage', [
+        'DataProduct' => $DataProduct,
+        'DataDiscount' => $DataDiscount,
+        'ProductCategory' => $ProductCategories
+    ]);
+})->name('discountpage');
 
 Route::get('/Login', function () {
     return Inertia::render('/Login');

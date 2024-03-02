@@ -9,6 +9,10 @@ class Discount extends Model
 {
     use HasFactory;
     protected $table = 'discounts';
+    public function Products()
+    {
+        return $this->belongsTo(Products::class, 'product_id');
+    }
 
     public function DiscountCategories()
     {

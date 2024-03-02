@@ -21,6 +21,9 @@ class ProductCategories extends Seeder
             ],
             [
             'category_name' => 'Sayur',
+            ],
+            [
+            'category_name' => 'parsel',
             ]
         ]);
     }

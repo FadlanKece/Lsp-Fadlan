@@ -10,50 +10,63 @@ import {
     Tooltip,
     Image,
 } from "@nextui-org/react";
+import Logo from "../../image/Logo.png";
+import Dropdown from "@/Components/Dropdown";
 
 export default function Homepage(props) {
-    const { DataProduct, DataDiscount, ProductCategory } = props;
-
+    const { DataProduct, DataDiscount, ProductCategory, auth } = props;
+    const [filter, setFilter] = React.useState("");
     const [search, setSearch] = React.useState("");
     const searchData = DataProduct.filter((item) =>
         item.product_name.toLowerCase().includes(search.toLowerCase())
     );
+    const dataFilter =
+        filter === ""
+            ? searchData
+            : searchData.filter(
+                  (item) => item.product_categories.category_name === filter
+              );
+
+    console.log(searchData);
 
     return (
-        <div className="w-screen h-screen flex flex-col gap-10 bg-[#262222]">
+        <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#262222]">
             <div className="">
-                <div className="w-full top-0 h-[60px] bg-white absolute"></div>
+                <div className="w-full top-0 h-[60px] bg-[#83A603] absolute"></div>
                 <Navbar isBordered className="w-screen bgblur">
                     <NavbarItem className="w-full flex flex-row justify-between">
                         <NavbarBrand className=" flex flex-row gap-3 ">
                             {/* <AcmeLogo /> */}
-                            <p className="hidden sm:block font-bold text-inherit">
-                                ACME
+                            <img
+                                className="w-[80px] h-[80px]"
+                                src={Logo}
+                                alt="logo"
+                            />
+                            <p className="hidden sm:block font-bold text-inherit text-white text-xl">
+                                FreshpickCorner
                             </p>
-                            <NavbarItem>
-                                <Link color="foreground" href="#">
+                            <NavbarItem isActive>
+                                <Link
+                                    className="text-white"
+                                    href={route("homepage")}
+                                >
                                     Home
                                 </Link>
                             </NavbarItem>
-                            <NavbarItem isActive>
+                            <NavbarItem>
                                 <Link
-                                    href="#"
-                                    aria-current="page"
-                                    color="secondary"
+                                    className="text-white"
+                                    href={route("discountpage")}
                                 >
                                     Discount
                                 </Link>
                             </NavbarItem>
                         </NavbarBrand>
-                        <NavbarItem className=" sm:flex gap-3">
-                            <Input
-                                classNames={{
-                                    base: "max-w-full sm:max-w-[10rem] h-10",
-                                    mainWrapper: "h-full",
-                                    input: "text-small",
-                                    inputWrapper:
-                                        "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-                                }}
+                        <NavbarItem className=" sm:flex gap-3 h-[80px] flex flex-row items-center justify-center">
+                            <Input className="rounded-lg border-0"
+                            classNames={{
+                                input:'border-0 active:outline-none'
+                            }}
                                 placeholder="Type to search..."
                                 size="sm"
                                 value={search}
@@ -64,24 +77,94 @@ export default function Homepage(props) {
                                 type="search"
                             />
                             <NavbarItem>
-                                <Button>
-                                    {" "}
-                                    <Link
-                                        href={route("register")}
-                                        aria-current="page"
-                                        color="secondary"
-                                    >
-                                        Sign up
-                                    </Link>
-                                </Button>
+                                {" "}
+                                {auth.user ? (
+                                    <p>hello! {auth.user.name}</p>
+                                ) : (
+                                    <Button className="bg-[#4F7302]">
+                                        <Link
+                                            href={route("register")}
+                                            aria-current="page"
+                                            color="secondary"
+                                        >
+                                            Sign up
+                                        </Link>
+                                    </Button>
+                                )}
+                            </NavbarItem>
+                            <NavbarItem>
+                                <Link
+                                    className="text-white"
+                                    href='#'
+                                >
+                                    Wishlist
+                                </Link>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <Link
+                                    className="text-white"
+                                    href='#'
+                                >
+                                    Logout
+                                </Link>
                             </NavbarItem>
                         </NavbarItem>
                     </NavbarItem>
                 </Navbar>
             </div>
-            <div className="w-full h-full px-[120px]">
-                <div className="w-full flex flex-row flex-wrap gap-5">
-                    {searchData.map((item, index) => (
+            <div className="px-[170px] w-fit ">
+                <Dropdown>
+                    <Dropdown.Trigger>
+                        <span className="inline-flex rounded-md">
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-[#83A603] hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                            >
+                                product category
+                                <svg
+                                    className="ms-2 -me-0.5 h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </button>
+                        </span>
+                    </Dropdown.Trigger>
+
+                    <Dropdown.Content contentClasses="bg-[#83A603] text-white flex flex-col items-start">
+                    <button
+                            onClick={() => {
+                                setFilter("");
+                            }}
+                            className="p-1 px-2 text-sm text-white hover:text-gray-700 rounded-md hover:bg-white w-full text-left transition-all"
+                        >
+                            All
+                        </button>
+                        {ProductCategory.map((item, i) => (
+                            <button
+                                onClick={() => {
+                                    setFilter(item.category_name);
+                                }}
+                                key={i}
+                                className="p-1 px-2 text-sm text-white hover:text-gray-700 rounded-md hover:bg-white w-full text-left transition-all"
+                            >
+                                {item.category_name}
+                            </button>
+                        ))}
+
+
+                    </Dropdown.Content>
+                </Dropdown>
+            </div>
+            <div className="w-full h-full px-[120px] pb-10">
+                <div className="w-full flex flex-row flex-wrap gap-5 justify-center">
+                    {dataFilter.map((item, index) => (
                         <div
                             key={index}
                             className="w-[300px] bg-[#D9D7CC] rounded-2xl h-fit drop-shadow flex flex-col gap-2 "
@@ -101,15 +184,22 @@ export default function Homepage(props) {
                                 </h1>
                                 <div>
                                     <h1 className="text-xl ">{item.name}</h1>
-                                    <Tooltip content={item.description}>
-                                        <p className="line-clamp-2">
-                                            {item.description}
-                                        </p>
-                                    </Tooltip>
-                                    <p>Rp.{item.price}</p>
+                                    <p className="line-clamp-2">
+                                        {item.description}
+                                    </p>
+                                    <p className="">
+                                        Rp
+                                        {item.price
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                "."
+                                            )}
+                                        ,00{item.minimum_qty}
+                                    </p>
                                 </div>
                                 <Button className="w-full bg-[#83A603] text-white">
-                                    Add To Cart
+                                    Add To wishlist
                                 </Button>
                             </div>
                         </div>

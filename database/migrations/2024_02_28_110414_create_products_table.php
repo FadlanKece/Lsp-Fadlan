@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock_quantity');
             $table->string('image1_url');
+            $table->string('minimum_qty');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

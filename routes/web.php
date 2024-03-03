@@ -45,6 +45,11 @@ Route::get('/Login', function () {
     return Inertia::render('/Login');
 });
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/logout', 'ProfileController@logout')->name('logout.perform');
+});
+
+
 Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

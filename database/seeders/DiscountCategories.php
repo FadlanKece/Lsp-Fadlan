@@ -15,7 +15,12 @@ class DiscountCategories extends Seeder
     public function run(): void
     {
         DB::table('discount__categories')->insert([
-            'category_name' => Str::random(10),
+            [
+            'category_name' => 'Ramadhan Sale',
+            ],
+            [
+            'category_name' => 'Monday Sale',
+            ]
         ]);
     }
 }

@@ -7,7 +7,6 @@ import {
     Link,
     Input,
     Button,
-    Tooltip,
     Image,
 } from "@nextui-org/react";
 import Logo from "../../image/Logo.png";
@@ -79,10 +78,11 @@ export default function Homepage(props) {
                             <NavbarItem>
                                 {" "}
                                 {auth.user ? (
-                                    <p>hello! {auth.user.name}</p>
+                                    <p className="text-white">hello! {auth.user.name}</p>
                                 ) : (
                                     <Button className="bg-[#4F7302]">
                                         <Link
+                                            className="text-white"
                                             href={route("register")}
                                             aria-current="page"
                                             color="secondary"
@@ -93,20 +93,26 @@ export default function Homepage(props) {
                                 )}
                             </NavbarItem>
                             <NavbarItem>
-                                <Link
-                                    className="text-white"
-                                    href='#'
-                                >
-                                    Wishlist
-                                </Link>
+                            {" "}
+                                {auth.user ? (
+                                   <Link
+                                   className="text-white"
+                                   href="#"
+                               >
+                                   Wishlist
+                               </Link>
+                                ) : null}
                             </NavbarItem>
                             <NavbarItem>
-                                <Link
-                                    className="text-white"
-                                    href='#'
-                                >
-                                    Logout
-                                </Link>
+                            {" "}
+                                {auth.user ? (
+                                   <Link
+                                   className="text-white"
+                                   href={route('logout')} method="post"
+                               >
+                                   Logout
+                               </Link>
+                                ) : null}
                             </NavbarItem>
                         </NavbarItem>
                     </NavbarItem>

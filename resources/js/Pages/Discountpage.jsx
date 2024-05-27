@@ -29,10 +29,10 @@ export default function Discountpage(props) {
     console.log(searchData);
 
     return (
-        <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#262222]">
+        <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#f0f0f0]">
             <div className="">
-                <div className="w-full top-0 h-[60px] bg-[#83A603] absolute"></div>
-                <Navbar isBordered className="w-screen bgblur">
+                {/* <div className="w-full top-0 h-[60px] bg-[#83A603] absolute"></div> */}
+                <Navbar isBordered className="w-screen bg-[#83A603]">
                     <NavbarItem className="w-full flex flex-row justify-between">
                         <NavbarBrand className=" flex flex-row gap-3 ">
                             {/* <AcmeLogo /> */}

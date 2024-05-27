@@ -29,10 +29,10 @@ export default function Homepage(props) {
     console.log(searchData);
 
     return (
-        <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#262222]">
+        <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#f0f0f0]">
             <div className="">
-                <div className="w-full top-0 h-[60px] bg-[#83A603] absolute"></div>
-                <Navbar isBordered className="w-screen bgblur">
+                {/* <div className="w-full top-0 h-[60px] bg-[#83A603] absolute"></div> */}
+                <Navbar isBordered className="w-screen bg-[#83A603]">
                     <NavbarItem className="w-full flex flex-row justify-between">
                         <NavbarBrand className=" flex flex-row gap-3 ">
                             {/* <AcmeLogo /> */}
@@ -173,7 +173,7 @@ export default function Homepage(props) {
                     {dataFilter.map((item, index) => (
                         <div
                             key={index}
-                            className="w-[300px] bg-[#D9D7CC] rounded-2xl h-fit drop-shadow flex flex-col gap-2 "
+                            className="w-[300px] bg-[#ffffff] rounded-2xl shadow-md h-fit flex flex-col gap-2 "
                         >
                             <Image
                                 isZoomed

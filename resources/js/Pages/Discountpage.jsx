@@ -172,43 +172,43 @@ export default function Discountpage(props) {
                 <div className="w-full flex flex-row flex-wrap gap-5 justify-center">
                     {dataFilter.map((item, index) => (
                         <div
-                            key={index}
-                            className="w-[300px] bg-[#D9D7CC] rounded-2xl h-fit drop-shadow flex flex-col gap-2 "
-                        >
-                            <Image
-                                isZoomed
-                                src={item.image1_url}
-                                alt={item.name}
-                                radius="none"
-                                width={600}
-                                height={600}
-                                className="rounded-t-2xl w-[300px] h-[250px] "
-                            />
-                            <div className="flex flex-col p-4 justify-between items-start gap-5">
-                                <h1 className="text-2xl font-bold text-[#4F7302]">
-                                    {item.product_name}
-                                </h1>
-                                <div>
-                                    <h1 className="text-xl ">{item.name}</h1>
-                                    <p className="line-clamp-2">
-                                        {item.description}
-                                    </p>
-                                    <p className="">
-                                        Rp
-                                        {item.price
-                                            .toString()
-                                            .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                "."
-                                            )}
-                                        ,00{item.minimum_qty}
-                                    </p>
-                                </div>
-                                <Button className="w-full bg-[#83A603] text-white">
-                                    Add To wishlist
-                                </Button>
+                        key={index}
+                        className="w-[300px] bg-[#ffffff] rounded-2xl shadow-md h-fit flex flex-col gap-2 "
+                    >
+                        <Image
+                            isZoomed
+                            src={item.image1_url}
+                            alt={item.name}
+                            radius="none"
+                            width={600}
+                            height={600}
+                            className="rounded-t-2xl w-[300px] h-[250px] "
+                        />
+                        <div className="flex flex-col p-4 justify-between items-start gap-5">
+                            <h1 className="text-2xl font-bold text-[#4F7302]">
+                                {item.product_name}
+                            </h1>
+                            <div>
+                                <h1 className="text-xl ">{item.name}</h1>
+                                <p className="line-clamp-2">
+                                    {item.description}
+                                </p>
+                                <p className="font-bold">
+                                    Rp
+                                    {item.price
+                                        .toString()
+                                        .replace(
+                                            /\B(?=(\d{3})+(?!\d))/g,
+                                            "."
+                                        )}
+                                    ,00{item.minimum_qty}
+                                </p>
                             </div>
+                            <Button className="w-full bg-[#83A603] text-white">
+                                Add To wishlist
+                            </Button>
                         </div>
+                    </div>
                     ))}
                 </div>
             </div>

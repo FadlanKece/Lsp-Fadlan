@@ -193,7 +193,7 @@ export default function Homepage(props) {
                                     <p className="line-clamp-2">
                                         {item.description}
                                     </p>
-                                    <p className="">
+                                    <p className="font-bold">
                                         Rp
                                         {item.price
                                             .toString()

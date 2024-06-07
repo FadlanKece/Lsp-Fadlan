@@ -1,5 +1,5 @@
 import React from "react";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import {
     Navbar,
     NavbarBrand,
@@ -10,9 +10,10 @@ import {
     Image,
 } from "@nextui-org/react";
 import Logo from "../../image/Logo.png";
-import Dropdown from "@/Components/Dropdown";
+import { HiOutlineTrash } from "react-icons/hi";
+import { HiPencil } from "react-icons/hi2";
 
-export default function Homepage(props) {
+export default function Adminpage(props) {
     const { DataProduct, DataDiscount, ProductCategory, auth } = props;
     const [filter, setFilter] = React.useState("");
     const [search, setSearch] = React.useState("");
@@ -26,7 +27,9 @@ export default function Homepage(props) {
                   (item) => item.product_categories.category_name === filter
               );
 
-    console.log(searchData);
+    const {delete: destroy, data, post} = useForm({
+        
+    });
 
     return (
         <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#f0f0f0]">
@@ -44,7 +47,7 @@ export default function Homepage(props) {
                             <p className="hidden sm:block font-bold text-inherit text-white text-xl">
                                 FreshpickCorner
                             </p>
-                            <NavbarItem isActive>
+                            <NavbarItem>
                                 <Link
                                     className="text-white"
                                     href={route("homepage")}
@@ -62,10 +65,11 @@ export default function Homepage(props) {
                             </NavbarItem>
                         </NavbarBrand>
                         <NavbarItem className=" sm:flex gap-3 h-[80px] flex flex-row items-center justify-center">
-                            <Input className="rounded-lg border-0"
-                            classNames={{
-                                input:'border-0 active:outline-none'
-                            }}
+                            <Input
+                                className="rounded-lg border-0"
+                                classNames={{
+                                    input: "border-0 active:outline-none",
+                                }}
                                 placeholder="Type to search..."
                                 size="sm"
                                 value={search}
@@ -78,7 +82,9 @@ export default function Homepage(props) {
                             <NavbarItem>
                                 {" "}
                                 {auth.user ? (
-                                    <p className="text-white">hello! {auth.user.name}</p>
+                                    <p className="text-white">
+                                        hello! {auth.user.name}
+                                    </p>
                                 ) : (
                                     <Button className="bg-[#4F7302]">
                                         <Link
@@ -92,44 +98,42 @@ export default function Homepage(props) {
                                     </Button>
                                 )}
                             </NavbarItem>
-                            <NavbarItem>
-                            {" "}
-                                {auth?.user?.roles === 'owner' ? (
-                                   <Link
-                                   className="text-white"
-                                   href={route("adminpage")}
-                               >
-                                   Admin
-                               </Link>
+                            <NavbarItem isActive>
+                                {" "}
+                                {auth.user.roles === "owner" ? (
+                                    <Link
+                                        className="text-white"
+                                        href={route("adminpage")}
+                                    >
+                                        Admin
+                                    </Link>
                                 ) : null}
                             </NavbarItem>
                             <NavbarItem>
-                            {" "}
+                                {" "}
                                 {auth.user ? (
-                                   <Link
-                                   className="text-white"
-                                   href="#"
-                               >
-                                   Wishlist
-                               </Link>
+                                    <Link className="text-white" href="#">
+                                        Wishlist
+                                    </Link>
                                 ) : null}
                             </NavbarItem>
                             <NavbarItem>
-                            {" "}
+                                {" "}
                                 {auth.user ? (
-                                   <Link
-                                   className="text-white"
-                                   href={route('logout')} method="post"
-                               >
-                                   Logout
-                               </Link>
+                                    <Link
+                                        className="text-white"
+                                        href={route("logout")}
+                                        method="post"
+                                    >
+                                        Logout
+                                    </Link>
                                 ) : null}
                             </NavbarItem>
                         </NavbarItem>
                     </NavbarItem>
                 </Navbar>
             </div>
-            <div className="px-[170px] w-fit ">
+            {/* <div className="px-[170px] w-fit ">
                 <Dropdown>
                     <Dropdown.Trigger>
                         <span className="inline-flex rounded-md">
@@ -178,7 +182,7 @@ export default function Homepage(props) {
 
                     </Dropdown.Content>
                 </Dropdown>
-            </div>
+            </div> */}
             <div className="w-full h-full px-[120px] pb-10">
                 <div className="w-full flex flex-row flex-wrap gap-5 justify-center">
                     {dataFilter.map((item, index) => (
@@ -189,7 +193,7 @@ export default function Homepage(props) {
                             <Image
                                 isZoomed
                                 src={item.image1_url}
-                                alt={item.product_name}
+                                alt={item.name}
                                 radius="none"
                                 width={600}
                                 height={600}
@@ -215,8 +219,25 @@ export default function Homepage(props) {
                                         ,00{item.minimum_qty}
                                     </p>
                                 </div>
-                                <Button className="w-full bg-[#83A603] text-white">
-                                    Add To wishlist
+                                <Button className="w-full bg-[#404fd8] text-white">
+                                    <HiPencil />
+                                    Edit
+                                </Button>
+                                <Button
+                                    className="w-full bg-[#b93131] text-white"
+                                    onClick={() => {
+                                        destroy(
+                                            route("product.destroy", {
+                                                id: item.id,
+                                            }),
+                                            {
+                                                preserveScroll: true,
+                                            }
+                                        );
+                                    }}
+                                >
+                                    <HiOutlineTrash />
+                                    Remove
                                 </Button>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ use App\Models\Discount_Categories;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,17 @@ Route::get('/discount', function () {
     ]);
 })->name('discountpage');
 
+Route::get('/admin', function () {
+    $DataProduct = Products::with('ProductCategories')->get();
+    $DataDiscount = Discount::with('DiscountCategories', 'Products')->get();
+    $ProductCategories = Discount_Categories::all();
+    return Inertia::render('Adminpage', [
+        'DataProduct' => $DataProduct,
+        'DataDiscount' => $DataDiscount,
+        'ProductCategory' => $ProductCategories
+    ]);
+})->name('adminpage');
+
 Route::get('/Login', function () {
     return Inertia::render('/Login');
 });
@@ -62,6 +74,8 @@ Route::get('/welcome', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

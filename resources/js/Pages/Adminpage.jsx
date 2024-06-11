@@ -12,6 +12,7 @@ import {
 import Logo from "../../image/Logo.png";
 import { HiOutlineTrash } from "react-icons/hi";
 import { HiPencil } from "react-icons/hi2";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 
 export default function Adminpage(props) {
     const { DataProduct, DataDiscount, ProductCategory, auth } = props;
@@ -28,7 +29,7 @@ export default function Adminpage(props) {
               );
 
     const {delete: destroy, data, post} = useForm({
-        
+
     });
 
     return (
@@ -183,6 +184,12 @@ export default function Adminpage(props) {
                     </Dropdown.Content>
                 </Dropdown>
             </div> */}
+            <div className="px-[170px] w-fit h-10">
+                <Button className="w-30 h-10 justify-center bg-[#83A603] text-white">
+            <BsFillPlusCircleFill />
+            add product
+                </Button>
+            </div>
             <div className="w-full h-full px-[120px] pb-10">
                 <div className="w-full flex flex-row flex-wrap gap-5 justify-center">
                     {dataFilter.map((item, index) => (

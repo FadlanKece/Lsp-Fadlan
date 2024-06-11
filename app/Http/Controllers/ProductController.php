@@ -32,7 +32,7 @@ class ProductController extends Controller
                 'minimum_quantity' => $request->minimum_quantity,
             ]);
 
-            return redirect()->route('dashboard')->with('success', 'Product Added');
+            return redirect()->route('adminpage')->with('success', 'Product Added');
 
     }
 
@@ -59,7 +59,7 @@ class ProductController extends Controller
         ]);
 
         // Find the product
-        $product = Product::findOrFail($id);
+        $product = Products::findOrFail($id);
 
         // Handle the image upload
         if ($request->hasFile('image')) {
@@ -84,7 +84,7 @@ class ProductController extends Controller
         // Save the product
         $product->save();
 
-        return redirect()->route('dashboard')->with('success', 'Product Updated');
+        return redirect()->route('adminpage')->with('success', 'Product Updated');
     }
 
 }

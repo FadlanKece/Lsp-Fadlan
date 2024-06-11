@@ -108,7 +108,7 @@ export default function Homepage(props) {
                                 {auth.user ? (
                                    <Link
                                    className="text-white"
-                                   href="#"
+                                   href={route("wishlistpage")}
                                >
                                    Wishlist
                                </Link>

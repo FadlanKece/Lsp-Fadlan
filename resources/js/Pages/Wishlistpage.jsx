@@ -8,12 +8,11 @@ import {
     Input,
     Button,
     Image,
-    Tooltip,
 } from "@nextui-org/react";
 import Logo from "../../image/Logo.png";
 import Dropdown from "@/Components/Dropdown";
 
-export default function Discountpage(props) {
+export default function Wishlistpage(props) {
     const { DataProduct, DataDiscount, ProductCategory, auth } = props;
     const [filter, setFilter] = React.useState("");
     const [search, setSearch] = React.useState("");
@@ -22,12 +21,12 @@ export default function Discountpage(props) {
     );
     const dataFilter =
         filter === ""
-            ? DataDiscount
-            : DataDiscount.filter(
-                  (item) => item.discount_categories.category_name === filter
+            ? searchData
+            : searchData.filter(
+                  (item) => item.product_categories.category_name === filter
               );
 
-    console.log(DataDiscount);
+    console.log(searchData);
 
     return (
         <div className="w-full overflow-x-hidden min-h-screen flex flex-col gap-10 bg-[#f0f0f0]">
@@ -53,7 +52,7 @@ export default function Discountpage(props) {
                                     Home
                                 </Link>
                             </NavbarItem>
-                            <NavbarItem isActive>
+                            <NavbarItem>
                                 <Link
                                     className="text-white"
                                     href={route("discountpage")}
@@ -63,10 +62,11 @@ export default function Discountpage(props) {
                             </NavbarItem>
                         </NavbarBrand>
                         <NavbarItem className=" sm:flex gap-3 h-[80px] flex flex-row items-center justify-center">
-                            <Input className="rounded-lg border-0"
-                            classNames={{
-                                input:'border-0 active:outline-none'
-                            }}
+                            <Input
+                                className="rounded-lg border-0"
+                                classNames={{
+                                    input: "border-0 active:outline-none",
+                                }}
                                 placeholder="Type to search..."
                                 size="sm"
                                 value={search}
@@ -79,7 +79,9 @@ export default function Discountpage(props) {
                             <NavbarItem>
                                 {" "}
                                 {auth.user ? (
-                                    <p className="text-white">hello! {auth.user.name}</p>
+                                    <p className="text-white">
+                                        hello! {auth.user.name}
+                                    </p>
                                 ) : (
                                     <Button className="bg-[#4F7302]">
                                         <Link
@@ -94,43 +96,55 @@ export default function Discountpage(props) {
                                 )}
                             </NavbarItem>
                             <NavbarItem>
-                            {" "}
-                                {auth?.user?.roles === 'owner' ? (
-                                   <Link
-                                   className="text-white"
-                                   href={route("adminpage")}
-                               >
-                                   Admin
-                               </Link>
+                                {" "}
+                                {auth?.user?.roles === "owner" ? (
+                                    <Link
+                                        className="text-white"
+                                        href={route("adminpage")}
+                                    >
+                                        Admin
+                                    </Link>
+                                ) : null}
+                            </NavbarItem>
+                            <NavbarItem isActive>
+                                {" "}
+                                {auth.user ? (
+                                    <Link className="text-white" href="#">
+                                        Wishlist
+                                    </Link>
                                 ) : null}
                             </NavbarItem>
                             <NavbarItem>
-                            {" "}
+                                {" "}
                                 {auth.user ? (
-                                   <Link
-                                   className="text-white"
-                                   href="#"
-                               >
-                                   Wishlist
-                               </Link>
-                                ) : null}
-                            </NavbarItem>
-                            <NavbarItem>
-                            {" "}
-                                {auth.user ? (
-                                   <Link
-                                   className="text-white"
-                                   href={route('logout')} method="post"
-                               >
-                                   Logout
-                               </Link>
+                                    <Link
+                                        className="text-white"
+                                        href={route("logout")}
+                                        method="post"
+                                    >
+                                        Logout
+                                    </Link>
                                 ) : null}
                             </NavbarItem>
                         </NavbarItem>
                     </NavbarItem>
                 </Navbar>
             </div>
-            <div className="px-[170px] w-fit ">
+            <div className="w-full h-full flex items-center justify-center">
+                <div className="text-white bg-[#4f73023a] w-[1000px] h-[600px] justify-center flex">
+                    <table className="">
+                        <thead>
+                            <tr>
+                            <td>keranjang</td>
+                            <td>keranjang</td>
+                            <td>keranjang</td>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            {/* <div className="px-[170px] w-fit ">
                 <Dropdown>
                     <Dropdown.Trigger>
                         <span className="inline-flex rounded-md">
@@ -138,7 +152,7 @@ export default function Discountpage(props) {
                                 type="button"
                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-[#83A603] hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                             >
-                                Discount category
+                                product category
                                 <svg
                                     className="ms-2 -me-0.5 h-4 w-4"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -183,91 +197,46 @@ export default function Discountpage(props) {
             <div className="w-full h-full px-[120px] pb-10">
                 <div className="w-full flex flex-row flex-wrap gap-5 justify-center">
                     {dataFilter.map((item, index) => (
-                         <div
-                         key={index}
-                         className="w-[300px] bg-[#ffffff] rounded-2xl shadow-md h-fit flex flex-col gap-2"
-                     >
-                         <Image
-                            isZoomed
-                            src={item.products.image1_url}
-                            alt={item.products.product_name}
-                            radius="none"
-                            width={600}
-                            height={600}
-                            className="rounded-t-2xl w-[300px] h-[250px] "
-                         />
-                         <div className="flex flex-col p-4 justify-between items-start gap-5">
+                        <div
+                            key={index}
+                            className="w-[300px] bg-[#ffffff] rounded-2xl shadow-md h-fit flex flex-col gap-2 "
+                        >
+                            <Image
+                                isZoomed
+                                src={item.image1_url}
+                                alt={item.product_name}
+                                radius="none"
+                                width={600}
+                                height={600}
+                                className="rounded-t-2xl w-[300px] h-[250px] "
+                            />
+                            <div className="flex flex-col p-4 justify-between items-start gap-5">
                                 <h1 className="text-2xl font-bold text-[#4F7302]">
-                                 {item.products.product_name}
-                             </h1>
-                             <div>
-
-                                     <p className="line-clamp-2">
-                                         {item.products?.description}
-                                     </p>
-                                 <div className="pt-4">
-                                     <sup>
-                                         <del className="text-green-800">
-                                             <p>
-                                                 Rp{" "}
-                                                 {item.products.price
-                                                     .toString()
-                                                     .replace(
-                                                         /\B(?=(\d{3})+(?!\d))/g,
-                                                         "."
-                                                     )} {item?.products?.minimum_qty}
-                                             </p>
-                                         </del>
-                                     </sup>
-                                     <p>
-                                         Rp
-                                         {(
-                                             item.products.price -
-                                             (item.products.price *
-                                                 item.percentage) /
-                                                 100
-                                         )
-                                             .toString()
-                                             .replace(
-                                                 /\B(?=(\d{3})+(?!\d))/g,
-                                                 "."
-                                             )} {item?.products?.minimum_qty}
-                                     </p>
-                                        <p className="text-sm text-red-500">
-                                            {item?.discount_categories?.category_name}!!
-                                        </p>
-                                 </div>
-                                 <p className="text-sm pt-2">
-                                     Periode :{" "}
-                                     {new Date(
-                                         item?.start_date
-                                     ).toLocaleDateString("id-ID", {
-                                         year: "numeric",
-                                         month: "long",
-                                         day: "numeric",
-                                     })}{" "}
-                                     -{" "}
-                                     {new Date(
-                                         item?.end_date
-                                     ).toLocaleDateString("id-ID", {
-                                         year: "numeric",
-                                         month: "long",
-                                         day: "numeric",
-                                     })}
-                                 </p>
-                             </div>
-                             <Button
-
-                                 className="w-full bg-[#83A603] text-white"
-                             >
-                                 Add To Wishlist
-                             </Button>
-                         </div>
-                     </div>
-
+                                    {item.product_name}
+                                </h1>
+                                <div>
+                                    <h1 className="text-xl ">{item.name}</h1>
+                                    <p className="line-clamp-2">
+                                        {item.description}
+                                    </p>
+                                    <p className="font-bold">
+                                        Rp
+                                        {item.price
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                "."
+                                            )}
+                                        ,00{item.minimum_qty}
+                                    </p>
+                                </div>
+                                <Button className="w-full bg-[#83A603] text-white">
+                                    Add To wishlist
+                                </Button>
+                            </div>
+                        </div>
                     ))}
-                </div>
-            </div>
+                </div> */}
         </div>
     );
 }

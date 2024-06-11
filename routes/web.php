@@ -53,13 +53,24 @@ Route::get('/admin', function () {
     ]);
 })->name('adminpage');
 
-Route::get('/Login', function () {
-    return Inertia::render('/Login');
-});
+Route::get('/wishlist', function () {
+    $DataProduct = Products::with('ProductCategories')->get();
+    $DataDiscount = Discount::with('DiscountCategories', 'Products')->get();
+    $ProductCategories = Discount_Categories::all();
+    return Inertia::render('Wishlistpage', [
+        'DataProduct' => $DataProduct,
+        'DataDiscount' => $DataDiscount,
+        'ProductCategory' => $ProductCategories
+    ]);
+})->name('wishlistpage');
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/logout', 'ProfileController@logout')->name('logout.perform');
-});
+// Route::get('/Login', function () {
+//     return Inertia::render('/Login');
+// });
+
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::get('/logout', ['ProfileController@logout'])->name('logout.perform');
+// });
 
 
 Route::get('/welcome', function () {

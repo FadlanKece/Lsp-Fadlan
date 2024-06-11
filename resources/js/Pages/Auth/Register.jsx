@@ -13,6 +13,8 @@ export default function Register() {
         password: '',
         password_confirmation: '',
         aktif: 'true',
+        phone: '',
+        address: '',
     });
 
     useEffect(() => {
@@ -64,6 +66,38 @@ export default function Register() {
                     />
 
                     <InputError message={errors.email} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <InputLabel className='text-white font-extrabold' htmlFor="phone" value="Phone" />
+
+                    <TextInput
+                        id="phone"
+                        type="number"
+                        name="phone"
+                        value={data.phone}
+                        className="mt-1 block w-full bg-[#D7D9A9] text-[#101f10]"
+                        autoComplete="username"
+                        onChange={(e) => setData('phone', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.phone} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <InputLabel className='text-white font-extrabold' htmlFor="address" value="Address" />
+
+                    <TextInput
+                        id="address"
+                        type="text"
+                        name="address"
+                        value={data.address}
+                        className="mt-1 block w-full bg-[#D7D9A9] text-[#101f10]"
+                        autoComplete="username"
+                        onChange={(e) => setData('address', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.address} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
